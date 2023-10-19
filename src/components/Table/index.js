@@ -27,7 +27,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const CustomizedTable = ({ users }) => {
+const UserTable = ({ users }) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -56,4 +56,4 @@ const CustomizedTable = ({ users }) => {
   );
 }
 
-export default CustomizedTable;
+export default UserTable;
