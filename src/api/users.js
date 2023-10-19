@@ -1,6 +1,6 @@
 import { get } from './index';
 
-async function getAllUsers(firstName, lastName, gender) {
+const getAllUsers = async (firstName, lastName, gender) => {
    let query = '';
 
    if (firstName) {
