@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-const apiUrl = 'http://localhost:3001/api';
+const apiUrl = process.env.REACT_APP_BASE_API_URL;
 
-function get(path) {
-   console.log(apiUrl)
+const get = (path) => {
 
    const headers = setUpHeaders();
    const url = `${apiUrl}${path}`;
@@ -17,7 +16,7 @@ function get(path) {
       });
 }
 
-function post(path, obj, headerAdd) {
+const post = (path, obj, headerAdd) => {
    let headers = setUpHeaders();
    if (headerAdd) {
       headers = {
@@ -41,7 +40,7 @@ function post(path, obj, headerAdd) {
       });
 }
 
-function put(path, obj) {
+const put = (path, obj) => {
    const headers = setUpHeaders();
    const url = `${apiUrl}${path}`;
 
@@ -54,7 +53,7 @@ function put(path, obj) {
       });
 }
 
-function setUpHeaders() {
+const setUpHeaders = () => {
    const configHeader = {
       headers: {
          'Content-Type': 'application/json',
