@@ -13,9 +13,6 @@ const App = () => {
             <Link to="/users">
               <Button>Users</Button>
             </Link>
-            <Link to="/messages">
-              <Button>Messages</Button>
-            </Link>
           </Stack>
         <Routes />
       </Wrapper>

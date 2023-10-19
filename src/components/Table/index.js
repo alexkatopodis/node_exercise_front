@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,6 +7,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import IconButton from '@mui/material/IconButton';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MessageDialog from '../MessageDialog'
+
+import { useDispatch } from 'react-redux';
+import { createMessage } from '../../store/messages/actions';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -28,31 +36,89 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const UserTable = ({ users }) => {
+  const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const dispatch = useDispatch();
+
+  const handleMenuClick = (event, user) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedUser(user);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+    setSelectedUser(null);
+    setOpen(false)
+  };
+
+  const openMessageDialog = () => {
+    setOpen(true);
+  };
+
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>First Name</StyledTableCell>
-            <StyledTableCell>Last Name</StyledTableCell>
-            <StyledTableCell>Birthdate</StyledTableCell>
-            <StyledTableCell>Gender</StyledTableCell>
-            <StyledTableCell>Username</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {users.map((user) => (
-            <StyledTableRow key={user.id}>
-              <StyledTableCell>{user.firstName}</StyledTableCell>
-              <StyledTableCell>{user.lastName}</StyledTableCell>
-              <StyledTableCell>{user.birthdate}</StyledTableCell>
-              <StyledTableCell>{user.gender}</StyledTableCell>
-              <StyledTableCell>{user.username}</StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>First Name</StyledTableCell>
+              <StyledTableCell>Last Name</StyledTableCell>
+              <StyledTableCell>Birthdate</StyledTableCell>
+              <StyledTableCell>Gender</StyledTableCell>
+              <StyledTableCell>Username</StyledTableCell>
+              <StyledTableCell>Actions</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {users.map((user) => (
+              <StyledTableRow key={user.id}>
+                <StyledTableCell>{user.firstName}</StyledTableCell>
+                <StyledTableCell>{user.lastName}</StyledTableCell>
+                <StyledTableCell>{user.birthdate}</StyledTableCell>
+                <StyledTableCell>{user.gender}</StyledTableCell>
+                <StyledTableCell>{user.username}</StyledTableCell>
+                <StyledTableCell>
+                    <IconButton
+                      aria-label="more"
+                      aria-controls="user-actions-menu"
+                      aria-haspopup="true"
+                      onClick={(e) => handleMenuClick(e, user)}
+                    >
+                      <MoreVertIcon />
+                    </IconButton>
+                    <Menu
+                      id="user-actions-menu"
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={() => setAnchorEl(null)}
+                    >
+                      <MenuItem
+                        onClick={() => {
+                          openMessageDialog()
+                        }}
+                      >
+                        Create Message
+                      </MenuItem>
+                    </Menu>
+                  </StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <MessageDialog
+        isOpen={open}
+        onClose={handleCloseMenu}
+        users={users}
+        selectedUser={selectedUser}
+        onSendMessage={(message) => {
+          dispatch(createMessage(message));
+        }}
+      />
+    </>
   );
 }
 

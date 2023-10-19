@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers } from '../../store/users/actions';
+
 import UserTable from '../../components/Table';
 import Container from '@mui/material/Container';
 import Filter from '../../components/Filter';
@@ -22,10 +23,11 @@ const Users = () => {
   }, [dispatch]);
 
 
+
   return (
     <Container maxWidth="md">
       <Filter onFilter={applyFilter} onClear={handleClearFilter}/>
-      <UserTable users={users}/>
+      <UserTable users={users} />
     </Container>
   );
 }

@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-// import Layout from "./layout/reducer";
 import usersReducer from "./users/reducer";
+import messagesReducer from './messages/reducer'
 
 const rootReducer = combineReducers({
-  // layout: Layout,
   users: usersReducer,
+  messages: messagesReducer,
 });
 
 export default rootReducer;
