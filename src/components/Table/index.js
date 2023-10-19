@@ -12,6 +12,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MessageDialog from '../MessageDialog'
+import BetweenMessageDialog from '../BetweenMessageDialog';
 
 import { useDispatch } from 'react-redux';
 import { createMessage } from '../../store/messages/actions';
@@ -37,6 +38,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const UserTable = ({ users }) => {
   const [open, setOpen] = useState(false);
+  const [openMessagesBetweenUsersDialog, setOpenMessagesBetweenUsersDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -53,10 +55,13 @@ const UserTable = ({ users }) => {
     setOpen(false)
   };
 
-  const openMessageDialog = () => {
+  const handleMessageDialog = () => {
     setOpen(true);
   };
 
+  const handleMessagesBetweenUsersDialog = () => {
+    setOpenMessagesBetweenUsersDialog(true);
+  };
   return (
     <>
       <TableContainer component={Paper}>
@@ -97,10 +102,17 @@ const UserTable = ({ users }) => {
                     >
                       <MenuItem
                         onClick={() => {
-                          openMessageDialog()
+                          handleMessageDialog()
                         }}
                       >
                         Create Message
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          handleMessagesBetweenUsersDialog()
+                        }}
+                      >
+                         Between Message
                       </MenuItem>
                     </Menu>
                   </StyledTableCell>
@@ -117,6 +129,12 @@ const UserTable = ({ users }) => {
         onSendMessage={(message) => {
           dispatch(createMessage(message));
         }}
+      />
+       <BetweenMessageDialog
+        isOpen={openMessagesBetweenUsersDialog}
+        onClose={() => setOpenMessagesBetweenUsersDialog(false)}
+        users={users}
+        selectedUser={selectedUser}
       />
     </>
   );

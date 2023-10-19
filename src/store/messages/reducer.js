@@ -4,6 +4,7 @@ const initialState = {
   messages: [],
   loading: false,
   error: null,
+  availableUsers: []
 };
 
 const messagesReducer = (state = initialState, action) => {
@@ -20,6 +21,23 @@ const messagesReducer = (state = initialState, action) => {
         loading: false,
       };
     case types.CREATE_MESSAGE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case types.FETCH_MESSAGES_BETWEEN_USERS:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case types.FETCH_MESSAGES_BETWEEN_USERS_SUCCESS:
+      return {
+        ...state,
+        messages: action.payload.messages,
+      };
+    case types.FETCH_MESSAGES_BETWEEN_USERS_FAILURE:
       return {
         ...state,
         loading: false,

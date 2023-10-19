@@ -13,8 +13,21 @@ function* createMessageSaga(action) {
   }
 }
 
+function* fetchMessagesBetweenUsersSaga(action) {
+  try {
+    const { userId1, userId2 } = action.query;
+
+    const messages = yield call(api.getMessagesBetweenUsers, userId1, userId2);
+    yield put(actions.fetchMessagesBetweenUsersSuccess(messages));
+
+  } catch (error) {
+    yield put(actions.fetchMessagesBetweenUsersFailure(error));
+  }
+}
+
 function* messagesSaga() {
   yield takeLatest(types.CREATE_MESSAGE, createMessageSaga);
+  yield takeLatest(types.FETCH_MESSAGES_BETWEEN_USERS, fetchMessagesBetweenUsersSaga);
 }
 
 export default messagesSaga;
