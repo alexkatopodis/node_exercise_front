@@ -1,18 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Routes from './routes/Routes';
+import { Wrapper, H1, Button } from './style';
 
 const App = () => {
   return (
-    <div className='app'>
-      <div className="wrapper">
-        <h1>PCCW Plataform</h1>
+    <>
+     <Wrapper>
+        <H1>PCCW Plataform</H1>
         <Link to="/users">
-          <button>Users</button>
+          <Button>Users</Button>
         </Link>
         <Routes />
-      </div>
-    </div>
+      </Wrapper>
+    </>
   );
 }
 
