@@ -1,6 +1,8 @@
 import { get } from './index';
 
-const getAllUsers = async (firstName, lastName, gender) => {
+const getAllUsers = async (props) => {
+   const { firstName, lastName, gender } = props;
+
    let query = '';
 
    if (firstName) {
@@ -15,14 +17,19 @@ const getAllUsers = async (firstName, lastName, gender) => {
       query += `gender=${gender}&`;
    }
 
-   if (query.endsWith('&')) {
-      query = query.slice(0, -1);
+   if (query) {
+      if (query.endsWith('&')) {
+         query = query.slice(0, -1);
+      }
    }
 
-   const response = await get(`/getUsers?${query}`);
+   const queryParam = query ? `?${query}` : '';
+
+   const response = await get(`/getUsers${queryParam}`);
    return response.data;
 }
 
 export {
    getAllUsers
 }
+

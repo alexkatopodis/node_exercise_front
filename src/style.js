@@ -10,7 +10,7 @@ export const H1 = styled.h1`
 `;
 
 export const Button = styled.button`
-  background-color: #007bff;
+  background-color: #1976d2;
   color: white;
   padding: 10px 20px;
   border: none;
