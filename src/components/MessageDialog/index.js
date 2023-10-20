@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Stack, Box } from '@mui/material';
 
-const MessageDialog = ({ isOpen, onClose, users, selectedUser, onSendMessage }) => {
+const MessageDialog = ({ isOpen, onClose, users, selectedUser, onSendMessage, userInitial }) => {
   const [content, setContent] = useState('');
   const [receiverId, setReceiverId] = useState('');
 
