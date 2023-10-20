@@ -43,3 +43,18 @@ export const updateMessageFailure = (error) => ({
   payload: error,
 });
 
+export const fetchMessagesUnread = ({ userId }) => ({
+  type: types.UNREAD_MESSAGE_REQUEST,
+  query: { userId }
+});
+
+export const fetchMessagesUnreadSuccess = (messages) => ({
+  type: types.UNREAD_MESSAGE_SUCCESS,
+  payload: { messages }
+})
+
+export const fetchMessagesUnreadFailure = (error) => ({
+  type: types.UNREAD_MESSAGE_FAILURE,
+  payload: error,
+});
+

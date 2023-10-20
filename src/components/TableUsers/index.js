@@ -11,6 +11,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MessageDialog from '../Dialog/MessageDialog'
 import BetweenMessageDialog from '../Dialog/BetweenMessageDialog';
+import UnreadMessageDialog from '../Dialog/UnreadMessageDialog';
 import { StyledTableCell, StyledTableRow } from './style';
 import { useDispatch } from 'react-redux';
 import { createMessage } from '../../store/messages/actions';
@@ -19,6 +20,7 @@ import { createMessage } from '../../store/messages/actions';
 const UserTable = ({ users, userInitial }) => {
   const [open, setOpen] = useState(false);
   const [openMessagesBetweenUsersDialog, setOpenMessagesBetweenUsersDialog] = useState(false);
+  const [openMessagesUnreadDialog, setOpenMessagesUnreadDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -42,6 +44,11 @@ const UserTable = ({ users, userInitial }) => {
   const handleMessagesBetweenUsersDialog = () => {
     setOpenMessagesBetweenUsersDialog(true);
   };
+
+  const handleUnreadMessagesDialog = () => {
+    setOpenMessagesUnreadDialog(true)
+  }
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -94,6 +101,13 @@ const UserTable = ({ users, userInitial }) => {
                       >
                          Between Message
                       </MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          handleUnreadMessagesDialog()
+                        }}
+                      >
+                         Unread Message
+                      </MenuItem>
                     </Menu>
                   </StyledTableCell>
               </StyledTableRow>
@@ -110,11 +124,16 @@ const UserTable = ({ users, userInitial }) => {
           dispatch(createMessage(message));
         }}
       />
-       <BetweenMessageDialog
+      <BetweenMessageDialog
         isOpen={openMessagesBetweenUsersDialog}
         onClose={() => setOpenMessagesBetweenUsersDialog(false)}
         users={userInitial}
         selectedUser={selectedUser}
+      />
+      <UnreadMessageDialog
+         isOpen={openMessagesUnreadDialog}
+         onClose={() => setOpenMessagesUnreadDialog(false)}
+         selectedUser={selectedUser}
       />
     </>
   );

@@ -21,5 +21,16 @@ const updateMessage = async (id, messageData) => {
   return response.data;
 };
 
+const getUnreadMessages = async (userId) => {
+  try {
+    const url = `/unreadMessages?userId=${userId}`;
 
-export { createMessage, getMessagesBetweenUsers, updateMessage };
+    const response = await get(url);
+    return response.data;
+  } catch (error) {
+    throw new Error('Messages not found');
+  }
+};
+
+
+export { createMessage, getMessagesBetweenUsers, updateMessage, getUnreadMessages };

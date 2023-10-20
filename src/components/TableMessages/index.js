@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { updateMessageRequest, fetchMessagesBetweenUsers } from '../../store/messages/actions';
 import { StyledTableCell, StyledTableRow } from './style';
 
-const MessageTable = ({ messages }) => {
+const MessageTable = ({ messages, unReadTable = false }) => {
   const [newContent, setNewContent] = useState('');
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [newIndex, setNewIndex] = useState();
@@ -92,7 +92,7 @@ const MessageTable = ({ messages }) => {
             <StyledTableCell>Content</StyledTableCell>
             <StyledTableCell>Timestamp</StyledTableCell>
             <StyledTableCell>Seen</StyledTableCell>
-            <StyledTableCell>Actions</StyledTableCell>
+            {!unReadTable && <StyledTableCell>Actions</StyledTableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -106,26 +106,28 @@ const MessageTable = ({ messages }) => {
                 <StyledTableCell>{message.content}</StyledTableCell>
                 <StyledTableCell>{formatTimestamp(message.timestampSent)}</StyledTableCell>
                 <StyledTableCell>{message.seen ? 'Yes' : 'No'}</StyledTableCell>
-                <StyledTableCell>
-                  <IconButton
-                    aria-label="more"
-                    aria-controls={`message-actions-menu-${index}`}
-                    aria-haspopup="true"
-                    onClick={(e) => handleMenuClick(e, index)}
-                  >
-                    <MoreVertIcon />
-                  </IconButton>
-                  <Menu
-                    id={`message-actions-menu-${index}`}
-                    anchorEl={anchorEls[index]}
-                    keepMounted
-                    open={Boolean(anchorEls[index])}
-                    onClose={() => handleCloseMenu(index)}
-                  >
-                    <MenuItem onClick={() => handleEditClick(message, index)}>Edit</MenuItem>
-                    <MenuItem onClick={() => handleSeeClick(message, index)}>See</MenuItem>
-                  </Menu>
-                </StyledTableCell>
+                {!unReadTable &&
+                  <StyledTableCell>
+                    <IconButton
+                      aria-label="more"
+                      aria-controls={`message-actions-menu-${index}`}
+                      aria-haspopup="true"
+                      onClick={(e) => handleMenuClick(e, index)}
+                    >
+                      <MoreVertIcon />
+                    </IconButton>
+                    <Menu
+                      id={`message-actions-menu-${index}`}
+                      anchorEl={anchorEls[index]}
+                      keepMounted
+                      open={Boolean(anchorEls[index])}
+                      onClose={() => handleCloseMenu(index)}
+                    >
+                      <MenuItem onClick={() => handleEditClick(message, index)}>Edit</MenuItem>
+                      <MenuItem onClick={() => handleSeeClick(message, index)}>See</MenuItem>
+                    </Menu>
+                  </StyledTableCell>
+                }
               </StyledTableRow>
             ))
           )}

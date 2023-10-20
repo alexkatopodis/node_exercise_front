@@ -4,7 +4,7 @@ const initialState = {
   messages: [],
   loading: false,
   error: null,
-  availableUsers: []
+  unread: []
 };
 
 const messagesReducer = (state = initialState, action) => {
@@ -55,6 +55,24 @@ const messagesReducer = (state = initialState, action) => {
         loading: false,
       };
     case types.UPDATE_MESSAGE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case types.UNREAD_MESSAGE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case types.UNREAD_MESSAGE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        unread: action.payload.messages,
+      };
+    case types.UNREAD_MESSAGE_FAILURE:
       return {
         ...state,
         loading: false,
