@@ -21,9 +21,14 @@ const post = (path, obj, headerAdd) => {
    if (headerAdd) {
       headers = {
          headers: {
-            ...headers.headers, ...headerAdd
+            ...headers.headers,
+            ...headerAdd,
          }
       };
+   }
+
+   if (obj instanceof FormData) {
+      headers.headers['Content-Type'] = 'multipart/form-data';
    }
 
    const url = `${apiUrl}${path}`;

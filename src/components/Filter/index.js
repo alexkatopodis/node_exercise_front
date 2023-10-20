@@ -5,10 +5,14 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Stack } from '@mui/material';
 import Bulk from '../Bulk';
+import { useDispatch } from 'react-redux';
+import { uploadXlsxFile } from '../../store/bulk/actions';
 
 const Filter = ({ onFilter, onClear }) => {
   const [selectedField, setSelectedField] = useState('firstName');
   const [filterValue, setFilterValue] = useState('');
+
+  const dispatch = useDispatch();
 
   const handleFieldChange = (e) => {
     setSelectedField(e.target.value);
@@ -24,6 +28,11 @@ const Filter = ({ onFilter, onClear }) => {
 
   const handleClearClick = () => {
     onClear();
+  };
+
+
+  const handleFileSelect = (file) => {
+    dispatch(uploadXlsxFile(file));
   };
 
 
@@ -55,7 +64,7 @@ const Filter = ({ onFilter, onClear }) => {
           Clear
         </Button>
       </Stack>
-      <Bulk />
+      <Bulk onFileSelect={handleFileSelect}/>
     </Stack>
 
   );
