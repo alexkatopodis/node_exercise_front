@@ -11,8 +11,8 @@ import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import MessageDialog from '../MessageDialog'
-import BetweenMessageDialog from '../BetweenMessageDialog';
+import MessageDialog from '../Dialog/MessageDialog'
+import BetweenMessageDialog from '../Dialog/BetweenMessageDialog';
 
 import { useDispatch } from 'react-redux';
 import { createMessage } from '../../store/messages/actions';
