@@ -7,9 +7,9 @@ function* uploadXlsxFileWorker(action) {
   try {
     const response = yield call(api.uploadXlsxFile, action.payload);
 
-    yield put({ type: actions.uploadXlsxFileSuccess, payload: response });
+    yield put(actions.uploadXlsxFileSuccess(response));
   } catch (error) {
-    yield put({ type: actions.uploadXlsxFileFailure, error });
+    yield put(actions.uploadXlsxFileFailure(error));
   }
 }
 

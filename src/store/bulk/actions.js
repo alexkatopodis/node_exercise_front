@@ -5,8 +5,9 @@ export const uploadXlsxFile = (file) => ({
   payload: file,
 });
 
-export const uploadXlsxFileSuccess = () => ({
+export const uploadXlsxFileSuccess = (message) => ({
   type: types.UPLOAD_XLSX_FILE_SUCCESS,
+  payload: message
 });
 
 export const uploadXlsxFileFailure = (error) => ({

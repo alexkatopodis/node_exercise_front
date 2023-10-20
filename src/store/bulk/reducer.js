@@ -15,14 +15,12 @@ const bulkReducer = (state = initialState, action) => {
         error: null,
         uploadSuccess: false,
       };
-
     case types.UPLOAD_XLSX_FILE_SUCCESS:
       return {
         ...state,
         loading: false,
         uploadSuccess: true,
       };
-
     case types.UPLOAD_XLSX_FILE_FAILURE:
       return {
         ...state,
@@ -30,7 +28,6 @@ const bulkReducer = (state = initialState, action) => {
         error: action.error,
         uploadSuccess: false,
       };
-
     default:
       return state;
   }

@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Stack } from '@mui/material';
 import Bulk from '../Bulk';
-import { useDispatch } from 'react-redux';
-import { uploadXlsxFile } from '../../store/bulk/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { uploadXlsxFile, uploadXlsxFileFailure } from '../../store/bulk/actions';
 
 const Filter = ({ onFilter, onClear }) => {
   const [selectedField, setSelectedField] = useState('firstName');
   const [filterValue, setFilterValue] = useState('');
 
   const dispatch = useDispatch();
+
+  const bulk = useSelector((state) => state.bulk.uploadSuccess);
 
   const handleFieldChange = (e) => {
     setSelectedField(e.target.value);
@@ -30,11 +32,16 @@ const Filter = ({ onFilter, onClear }) => {
     onClear();
   };
 
-
   const handleFileSelect = (file) => {
     dispatch(uploadXlsxFile(file));
   };
 
+  useEffect(() => {
+    if (bulk) {
+      onClear();
+      dispatch(uploadXlsxFileFailure('clear'));
+    }
+  }, [bulk, dispatch, onClear]);
 
   return (
     <Stack
