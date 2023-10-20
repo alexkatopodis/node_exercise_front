@@ -39,50 +39,34 @@ const BetweenMessageDialog = ({ isOpen, onClose, users, selectedUser }) => {
     <Dialog open={isOpen} onClose={onClose}>
         <DialogContent>
           <Container sx={{ padding: 2 }}>
-          <Stack className="stack" direction="row" spacing={1}>
-            <FormControl fullWidth>
-              <InputLabel sx={{ marginTop: '-10px', marginLeft: '-10px' }} htmlFor="sender-select">Sender</InputLabel>
-              <Select
-                id="sender-select"
-                value={selectedUser?.id || ''}
-                disabled
-                fullWidth
-              >
-                <MenuItem value={selectedUser?.id}>{selectedUser?.firstName}</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl fullWidth>
-              <InputLabel sx={{ marginTop: '-10px', marginLeft: '-10px' }} htmlFor="receiver-select">Receiver</InputLabel>
-              <Select
-                id="receiver-select"
-                value={selectedUserId || ''}
-                onChange={(e) => setSelectedUserId(e.target.value)}
-                fullWidth
-              >
-                {users.map((user) => (
-                  <MenuItem key={user.id} value={user?.id}>
-                    {user?.firstName}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Stack>
-            {/* <Stack className="stack" direction="row" spacing={1}>
-              <Select value={selectedUser?.id || ''} disabled fullWidth>
-                <MenuItem value={selectedUser?.id}>{selectedUser?.firstName}</MenuItem>
-              </Select>
-              <Select
-                value={selectedUserId || ''}
-                onChange={(e) => setSelectedUserId(e.target.value)}
-                fullWidth
-              >
-                {users.map((user) => (
-                  <MenuItem key={user.id} value={user?.id}>
-                    {user?.firstName}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Stack> */}
+            <Stack className="stack" direction="row" spacing={1}>
+              <FormControl fullWidth>
+                <InputLabel sx={{ marginTop: '-10px', marginLeft: '-10px' }} htmlFor="sender-select">Sender</InputLabel>
+                <Select
+                  id="sender-select"
+                  value={selectedUser?.id || ''}
+                  disabled
+                  fullWidth
+                >
+                  <MenuItem value={selectedUser?.id}>{selectedUser?.firstName}</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl fullWidth>
+                <InputLabel sx={{ marginTop: '-10px', marginLeft: '-10px' }} htmlFor="receiver-select">Receiver</InputLabel>
+                <Select
+                  id="receiver-select"
+                  value={selectedUserId || ''}
+                  onChange={(e) => setSelectedUserId(e.target.value)}
+                  fullWidth
+                >
+                  {users.map((user) => (
+                    <MenuItem key={user.id} value={user?.id}>
+                      {user?.firstName}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Stack>
             <Stack sx={{ marginTop: "15px", marginBottom: "15px" }} className="stack" direction="row" spacing={1} justifyContent="flex-end">
               <Button variant="outlined" color="primary" onClick={handleSearchClick}>
                 Search

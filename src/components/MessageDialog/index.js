@@ -33,11 +33,11 @@ const MessageDialog = ({ isOpen, onClose, users, selectedUser, onSendMessage, us
   }, [isOpen])
 
 
-  const optionsForSecondSelect = users.filter((user) => user?.id !== selectedUser?.id);
+  const optionsForSecondSelect = users?.filter((user) => user?.id !== selectedUser?.id);
 
   return (
     <Dialog open={isOpen} onClose={onClose}>
-      <DialogContent>
+      <DialogContent sx={{ minWidth: 500 }}>
         <Box sx={{ width: '100%' }}>
           <Stack className="stack" direction="row" spacing={1}>
             <Select value={selectedUser?.id || ''} disabled fullWidth>
