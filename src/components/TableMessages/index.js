@@ -3,6 +3,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { tableCellClasses } from '@mui/material/TableCell';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { styled } from '@mui/material/styles';
+import { formatTimestamp } from './utils';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -82,8 +83,3 @@ const MessageTable = ({ messages }) => {
 };
 
 export default MessageTable;
-
-function formatTimestamp(timestamp) {
-  const date = new Date(timestamp);
-  return date.toLocaleString();
-}
