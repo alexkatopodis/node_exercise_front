@@ -36,7 +36,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const UserTable = ({ users, userIntial }) => {
+const UserTable = ({ users, userInitial }) => {
   const [open, setOpen] = useState(false);
   const [openMessagesBetweenUsersDialog, setOpenMessagesBetweenUsersDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -124,7 +124,7 @@ const UserTable = ({ users, userIntial }) => {
       <MessageDialog
         isOpen={open}
         onClose={handleCloseMenu}
-        users={userIntial}
+        users={userInitial}
         selectedUser={selectedUser}
         onSendMessage={(message) => {
           dispatch(createMessage(message));
@@ -133,7 +133,7 @@ const UserTable = ({ users, userIntial }) => {
        <BetweenMessageDialog
         isOpen={openMessagesBetweenUsersDialog}
         onClose={() => setOpenMessagesBetweenUsersDialog(false)}
-        users={userIntial}
+        users={userInitial}
         selectedUser={selectedUser}
       />
     </>

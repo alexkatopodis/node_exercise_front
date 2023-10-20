@@ -32,7 +32,7 @@ const Users = () => {
   return (
     <Container maxWidth="md">
       <Filter onFilter={applyFilter} onClear={handleClearFilter}/>
-      <UserTable users={users} userIntial={userInitial}/>
+      <UserTable users={users} userInitial={userInitial}/>
     </Container>
   );
 }
