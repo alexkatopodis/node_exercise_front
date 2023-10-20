@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -13,28 +11,10 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MessageDialog from '../Dialog/MessageDialog'
 import BetweenMessageDialog from '../Dialog/BetweenMessageDialog';
-
+import { StyledTableCell, StyledTableRow } from './style';
 import { useDispatch } from 'react-redux';
 import { createMessage } from '../../store/messages/actions';
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#1976d2",
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
 
 const UserTable = ({ users, userInitial }) => {
   const [open, setOpen] = useState(false);

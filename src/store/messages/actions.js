@@ -29,4 +29,17 @@ export const fetchMessagesBetweenUsersFailure = (error) => ({
   payload: error,
 });
 
+export const updateMessageRequest = (id, data) => ({
+  type: types.UPDATE_MESSAGE_REQUEST,
+  payload: { id, data },
+});
+
+export const updateMessageSuccess = () => ({
+  type: types.UPDATE_MESSAGE_SUCCESS,
+});
+
+export const updateMessageFailure = (error) => ({
+  type: types.UPDATE_MESSAGE_FAILURE,
+  payload: error,
+});
 

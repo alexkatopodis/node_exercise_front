@@ -1,4 +1,4 @@
-import { get, post } from './index';
+import { get, post, put } from './index';
 
 const createMessage = async (messageData) => {
   const response = await post('/createMessage', messageData);
@@ -16,4 +16,10 @@ const getMessagesBetweenUsers = async (userId1, userId2) => {
   }
 };
 
-export { createMessage, getMessagesBetweenUsers };
+const updateMessage = async (id, messageData) => {
+  const response = await put(`/updateMessage/${id}`, messageData);
+  return response.data;
+};
+
+
+export { createMessage, getMessagesBetweenUsers, updateMessage };

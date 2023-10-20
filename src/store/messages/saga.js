@@ -25,9 +25,22 @@ function* fetchMessagesBetweenUsersSaga(action) {
   }
 }
 
+function* updateMessageSaga(action) {
+  try {
+    const { id, data } = action.payload;
+
+    yield call(api.updateMessage, id, data);
+
+    yield put(actions.updateMessageSuccess());
+  } catch (error) {
+    yield put(actions.updateMessageFailure(error));
+  }
+}
+
 function* messagesSaga() {
   yield takeLatest(types.CREATE_MESSAGE, createMessageSaga);
   yield takeLatest(types.FETCH_MESSAGES_BETWEEN_USERS, fetchMessagesBetweenUsersSaga);
+  yield takeLatest(types.UPDATE_MESSAGE_REQUEST, updateMessageSaga);
 }
 
 export default messagesSaga;

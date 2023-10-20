@@ -43,6 +43,23 @@ const messagesReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
+    case types.UPDATE_MESSAGE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case types.UPDATE_MESSAGE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case types.UPDATE_MESSAGE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
     default:
       return state;
   }

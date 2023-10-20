@@ -1,35 +1,88 @@
-import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Menu, MenuItem } from '@mui/material';
-import { tableCellClasses } from '@mui/material/TableCell';
+import React, { useState, useEffect } from 'react';
+import { Table, TableBody, TableContainer, TableHead, TableRow, Paper, IconButton, Menu, MenuItem } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { styled } from '@mui/material/styles';
 import { formatTimestamp } from './utils';
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#1976d2",
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
+import EditMessageDialog from '../Dialog/EditMessageDialog';
+import { useDispatch } from 'react-redux';
+import { updateMessageRequest, fetchMessagesBetweenUsers } from '../../store/messages/actions';
+import { StyledTableCell, StyledTableRow } from './style';
 
 const MessageTable = ({ messages }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [newContent, setNewContent] = useState('');
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [newIndex, setNewIndex] = useState();
+  const [editingMessage, setEditingMessage] = useState(null);
+  const [render, setRender] = useState(false);
+  const [messageObject, setMessageObject] = useState();
+  const [anchorEls, setAnchorEls] = useState(Array(messages?.length).fill(null));
 
-  const handleMenuClick = (event, message) => {
-    setAnchorEl(event.currentTarget);
+  const dispatch = useDispatch();
+
+  const handleEditClick = (message) => {
+    setEditingMessage(message);
+    setEditDialogOpen(true);
+    setNewContent(message.content);
   };
+
+  const handleEditDialogClose = () => {
+    setEditDialogOpen(false);
+    setMessageObject({});
+  };
+
+  const handleSubmitEdit = (message, index) => {
+    const updatedMessage = {
+      id: message.id,
+      content: newContent,
+      sender: message.sender,
+      receiver: message.receiver,
+      timestampSent: new Date().toISOString(),
+      seen: message.seen,
+    };
+
+    setMessageObject({ userId1: message.sender, userId2: message.receiver })
+
+    dispatch(updateMessageRequest(message.id, updatedMessage));
+    setRender(true);
+    setEditDialogOpen(false);
+
+    handleCloseMenu(index);
+  };
+
+  const handleSeeClick = (message, index) => {
+    const updatedMessage = {
+      ...message,
+      seen: true,
+    };
+
+    setMessageObject({ userId1: message.sender, userId2: message.receiver })
+
+    dispatch(updateMessageRequest(message.id, updatedMessage));
+    setRender(true);
+    setEditDialogOpen(false);
+
+    handleCloseMenu(index);
+  };
+
+  const handleMenuClick = (event, index) => {
+    const newAnchorEls = [...anchorEls];
+    newAnchorEls[index] = event.currentTarget;
+    setAnchorEls(newAnchorEls);
+    setNewIndex(index);
+  };
+
+  const handleCloseMenu = (index) => {
+    const newAnchorEls = [...anchorEls];
+    newAnchorEls[index] = null;
+    setAnchorEls(newAnchorEls);
+    setNewIndex();
+  };
+
+  useEffect(() => {
+    if (!editDialogOpen && render) {
+      dispatch(fetchMessagesBetweenUsers(messageObject))
+    }
+    setRender(false)
+  }, [dispatch, editDialogOpen, messageObject, render])
 
   return (
     <TableContainer component={Paper}>
@@ -47,37 +100,46 @@ const MessageTable = ({ messages }) => {
             <StyledTableRow>
               <StyledTableCell style={{ textAlign: 'center' }} colSpan={4}>No data</StyledTableCell>
             </StyledTableRow>
-        ) : (
-          messages.map((message) => (
-            <StyledTableRow key={message.id}>
-              <StyledTableCell>{message.content}</StyledTableCell>
-              <StyledTableCell>{formatTimestamp(message.timestampSent)}</StyledTableCell>
-              <StyledTableCell>{message.seen ? 'Yes' : 'No'}</StyledTableCell>
-              <StyledTableCell>
-                <IconButton
-                  aria-label="more"
-                  aria-controls="message-actions-menu"
-                  aria-haspopup="true"
-                  onClick={(e) => handleMenuClick(e, message)}
-                >
-                  <MoreVertIcon />
-                </IconButton>
-                <Menu
-                  id="message-actions-menu"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={() => setAnchorEl(null)}
-                >
-                  <MenuItem>Edit</MenuItem>
-                  <MenuItem>Delete</MenuItem>
-                </Menu>
-              </StyledTableCell>
-            </StyledTableRow>
-          ))
-        )}
+          ) : (
+            messages.map((message, index) => (
+              <StyledTableRow key={message.id}>
+                <StyledTableCell>{message.content}</StyledTableCell>
+                <StyledTableCell>{formatTimestamp(message.timestampSent)}</StyledTableCell>
+                <StyledTableCell>{message.seen ? 'Yes' : 'No'}</StyledTableCell>
+                <StyledTableCell>
+                  <IconButton
+                    aria-label="more"
+                    aria-controls={`message-actions-menu-${index}`}
+                    aria-haspopup="true"
+                    onClick={(e) => handleMenuClick(e, index)}
+                  >
+                    <MoreVertIcon />
+                  </IconButton>
+                  <Menu
+                    id={`message-actions-menu-${index}`}
+                    anchorEl={anchorEls[index]}
+                    keepMounted
+                    open={Boolean(anchorEls[index])}
+                    onClose={() => handleCloseMenu(index)}
+                  >
+                    <MenuItem onClick={() => handleEditClick(message, index)}>Edit</MenuItem>
+                    <MenuItem onClick={() => handleSeeClick(message, index)}>See</MenuItem>
+                  </Menu>
+                </StyledTableCell>
+              </StyledTableRow>
+            ))
+          )}
         </TableBody>
       </Table>
+      <EditMessageDialog
+        index={newIndex}
+        editDialogOpen={editDialogOpen}
+        handleEditDialogClose={handleEditDialogClose}
+        newContent={newContent}
+        setNewContent={setNewContent}
+        handleSubmitEdit={handleSubmitEdit}
+        message={editingMessage}
+      />
     </TableContainer>
   );
 };
