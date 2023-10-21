@@ -8,7 +8,7 @@ Initial
 `npm install`
 
 Run
-`npm run start-dev`
+`npm run start`
 
 ### Prerequisites
 
