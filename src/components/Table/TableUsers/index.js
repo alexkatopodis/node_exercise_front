@@ -9,12 +9,12 @@ import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import MessageDialog from '../Dialog/MessageDialog'
-import BetweenMessageDialog from '../Dialog/BetweenMessageDialog';
-import UnreadMessageDialog from '../Dialog/UnreadMessageDialog';
+import MessageDialog from '../../Dialog/MessageDialog'
+import BetweenMessageDialog from '../../Dialog/BetweenMessageDialog';
+import UnreadMessageDialog from '../../Dialog/UnreadMessageDialog';
 import { StyledTableCell, StyledTableRow } from './style';
 import { useDispatch } from 'react-redux';
-import { createMessage } from '../../store/messages/actions';
+import { createMessage } from '../../../store/messages/actions';
 
 
 const UserTable = ({ users, userInitial }) => {

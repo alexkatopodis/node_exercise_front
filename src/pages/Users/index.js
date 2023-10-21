@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers } from '../../store/users/actions';
-import UserTable from '../../components/TableUsers';
+import UserTable from '../../components/Table/TableUsers';
 import Container from '@mui/material/Container';
 import Filter from '../../components/Filter';
 

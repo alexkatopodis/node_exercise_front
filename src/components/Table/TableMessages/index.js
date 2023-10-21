@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Table, TableBody, TableContainer, TableHead, TableRow, Paper, IconButton, Menu, MenuItem } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { formatTimestamp } from './utils';
-import EditMessageDialog from '../Dialog/EditMessageDialog';
+import EditMessageDialog from '../../Dialog/EditMessageDialog';
 import { useDispatch } from 'react-redux';
-import { updateMessageRequest, fetchMessagesBetweenUsers } from '../../store/messages/actions';
+import { updateMessageRequest, fetchMessagesBetweenUsers } from '../../../store/messages/actions';
 import { StyledTableCell, StyledTableRow } from './style';
 
 const MessageTable = ({ messages, unReadTable = false }) => {

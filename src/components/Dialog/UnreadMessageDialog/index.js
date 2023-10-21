@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import { Stack, Container, Typography } from '@mui/material';
-import TableMessages from '../../TableMessages';
+import TableMessages from '../../Table/TableMessages';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMessagesUnread } from '../../../store/messages/actions';
 

@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import { Stack, Container, InputLabel, FormControl } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMessagesBetweenUsers } from '../../../store/messages/actions';
-import TableMessages from '../../TableMessages';
+import TableMessages from '../../Table/TableMessages';
 
 const BetweenMessageDialog = ({ isOpen, onClose, users, selectedUser }) => {
   const [selectedUserId, setSelectedUserId] = useState(null);
