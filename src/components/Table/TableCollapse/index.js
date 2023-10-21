@@ -12,6 +12,7 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { StyledTableCell, StyledTableRow } from '../style';
+import { formatTimestamp, formatDate } from '../utils';
 
 const Row = (props) => {
   const { row } = props;
@@ -34,7 +35,7 @@ const Row = (props) => {
         </TableCell>
         <TableCell align="right">{row.lastName}</TableCell>
         <TableCell align="right">{row.username}</TableCell>
-        <TableCell align="right">{row.birthdate}</TableCell>
+        <TableCell align="right">{formatDate(row.birthdate)}</TableCell>
       </StyledTableRow>
       <StyledTableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -55,7 +56,7 @@ const Row = (props) => {
                   {row.receivedMessages.map((message) => (
                     <StyledTableRow key={message.id}>
                       <TableCell component="th" scope="row">
-                        {message.timestampSent}
+                        {formatTimestamp(message.timestampSent)}
                       </TableCell>
                       <TableCell>{message.content}</TableCell>
                       <TableCell align="right">{message.seen ? 'Yes' : 'No'}</TableCell>
@@ -63,7 +64,7 @@ const Row = (props) => {
                   ))}
                 </TableBody>
               </Table>
-              <Typography variant="h6" gutterBottom component="div">
+              <Typography sx={{ marginTop: '10px' }} variant="h6" gutterBottom component="div">
                 Sent Messages
               </Typography>
               <Table size="small" aria-label="sent-messages">
@@ -78,7 +79,7 @@ const Row = (props) => {
                   {row.sentMessages.map((message) => (
                     <StyledTableRow key={message.id}>
                       <TableCell component="th" scope="row">
-                        {message.timestampSent}
+                        {formatTimestamp(message.timestampSent)}
                       </TableCell>
                       <TableCell>{message.content}</TableCell>
                       <TableCell align="right">{message.seen ? 'Yes' : 'No'}</TableCell>
