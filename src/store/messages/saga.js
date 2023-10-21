@@ -49,11 +49,24 @@ function* fetchMessagesUnreadSaga(action) {
   }
 }
 
+function* fetchRecentMessagesSaga(action) {
+  try {
+    const { userId } = action.query;
+
+    const messages = yield call(api.getRecentMessages, userId);
+    yield put(actions.recentMessageSuccess(messages));
+
+  } catch (error) {
+    yield put(actions.recentMessageFailure(error));
+  }
+}
+
 function* messagesSaga() {
   yield takeLatest(types.CREATE_MESSAGE, createMessageSaga);
   yield takeLatest(types.FETCH_MESSAGES_BETWEEN_USERS, fetchMessagesBetweenUsersSaga);
   yield takeLatest(types.UPDATE_MESSAGE_REQUEST, updateMessageSaga);
   yield takeLatest(types.UNREAD_MESSAGE_REQUEST, fetchMessagesUnreadSaga);
+  yield takeLatest(types.RECENT_MESSAGE_REQUEST, fetchRecentMessagesSaga);
 }
 
 export default messagesSaga;

@@ -32,5 +32,22 @@ const getUnreadMessages = async (userId) => {
   }
 };
 
+const getRecentMessages = async (userId) => {
+  try {
+    const url = `/getUsersSortedByRecentMessage?userId=${userId}`;
 
-export { createMessage, getMessagesBetweenUsers, updateMessage, getUnreadMessages };
+    const response = await get(url);
+    return response.data;
+  } catch (error) {
+    throw new Error('Messages not found');
+  }
+};
+
+
+export {
+  createMessage,
+  getMessagesBetweenUsers,
+  updateMessage,
+  getUnreadMessages,
+  getRecentMessages
+};

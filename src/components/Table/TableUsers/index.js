@@ -12,6 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MessageDialog from '../../Dialog/MessageDialog'
 import BetweenMessageDialog from '../../Dialog/BetweenMessageDialog';
 import UnreadMessageDialog from '../../Dialog/UnreadMessageDialog';
+import RecentMessageDialog from '../../Dialog/RecentMessageDialog';
 import { StyledTableCell, StyledTableRow } from './style';
 import { useDispatch } from 'react-redux';
 import { createMessage } from '../../../store/messages/actions';
@@ -21,6 +22,7 @@ const UserTable = ({ users, userInitial }) => {
   const [open, setOpen] = useState(false);
   const [openMessagesBetweenUsersDialog, setOpenMessagesBetweenUsersDialog] = useState(false);
   const [openMessagesUnreadDialog, setOpenMessagesUnreadDialog] = useState(false);
+  const [openMessagesRecentDialog, setOpenMessagesRecentDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -47,6 +49,10 @@ const UserTable = ({ users, userInitial }) => {
 
   const handleUnreadMessagesDialog = () => {
     setOpenMessagesUnreadDialog(true)
+  }
+
+  const handleRecentMessagesDialog = () => {
+    setOpenMessagesRecentDialog(true)
   }
 
   return (
@@ -99,14 +105,21 @@ const UserTable = ({ users, userInitial }) => {
                           handleMessagesBetweenUsersDialog()
                         }}
                       >
-                         Between Message
+                         Between Messages
                       </MenuItem>
                       <MenuItem
                         onClick={() => {
                           handleUnreadMessagesDialog()
                         }}
                       >
-                         Unread Message
+                         Unread Messages
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          handleRecentMessagesDialog()
+                        }}
+                      >
+                         Recent Messages
                       </MenuItem>
                     </Menu>
                   </StyledTableCell>
@@ -134,6 +147,11 @@ const UserTable = ({ users, userInitial }) => {
          isOpen={openMessagesUnreadDialog}
          onClose={() => setOpenMessagesUnreadDialog(false)}
          selectedUser={selectedUser}
+      />
+      <RecentMessageDialog
+        isOpen={openMessagesRecentDialog}
+        onClose={() => setOpenMessagesRecentDialog(false)}
+        selectedUser={selectedUser}
       />
     </>
   );

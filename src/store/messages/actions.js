@@ -58,3 +58,18 @@ export const fetchMessagesUnreadFailure = (error) => ({
   payload: error,
 });
 
+export const recentMessageRequest = ({ userId }) => ({
+  type: types.RECENT_MESSAGE_REQUEST,
+  query: { userId }
+});
+
+export const recentMessageSuccess = (messages) => ({
+  type: types.RECENT_MESSAGE_SUCCESS,
+  payload: { messages }
+});
+
+export const recentMessageFailure = (error) => ({
+  type: types.RECENT_MESSAGE_FAILURE,
+  payload: error,
+});
+

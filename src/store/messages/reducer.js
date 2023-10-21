@@ -78,6 +78,24 @@ const messagesReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
+      case types.RECENT_MESSAGE_REQUEST:
+        return {
+          ...state,
+          loading: true,
+          error: null,
+        };
+      case types.RECENT_MESSAGE_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+          unread: action.payload.messages,
+        };
+      case types.RECENT_MESSAGE_FAILURE:
+        return {
+          ...state,
+          loading: false,
+          error: action.payload,
+        };
     default:
       return state;
   }
