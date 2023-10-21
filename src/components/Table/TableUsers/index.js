@@ -13,7 +13,7 @@ import MessageDialog from '../../Dialog/MessageDialog'
 import BetweenMessageDialog from '../../Dialog/BetweenMessageDialog';
 import UnreadMessageDialog from '../../Dialog/UnreadMessageDialog';
 import RecentMessageDialog from '../../Dialog/RecentMessageDialog';
-import { StyledTableCell, StyledTableRow } from './style';
+import { StyledTableCell, StyledTableRow } from '../style';
 import { useDispatch } from 'react-redux';
 import { createMessage } from '../../../store/messages/actions';
 

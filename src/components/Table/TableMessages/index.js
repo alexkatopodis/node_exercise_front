@@ -5,7 +5,7 @@ import { formatTimestamp } from './utils';
 import EditMessageDialog from '../../Dialog/EditMessageDialog';
 import { useDispatch } from 'react-redux';
 import { updateMessageRequest, fetchMessagesBetweenUsers } from '../../../store/messages/actions';
-import { StyledTableCell, StyledTableRow } from './style';
+import { StyledTableCell, StyledTableRow } from '../style';
 
 const MessageTable = ({ messages, unReadTable = false }) => {
   const [newContent, setNewContent] = useState('');
