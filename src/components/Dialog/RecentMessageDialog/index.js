@@ -27,9 +27,6 @@ const RecentMessageDialog = ({ isOpen, onClose, selectedUser }) => {
     }
   }, [isOpen, messages])
 
-
-  console.log(localMessages, 'localMessages')
-
   return (
     <Dialog maxWidth={"xl"} open={isOpen} onClose={onClose}>
         <Container sx={{ padding: 2 }}>
